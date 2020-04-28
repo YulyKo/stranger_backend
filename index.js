@@ -69,7 +69,7 @@ app.get('/plot_tags/:id', db.plot_tag.getByIdForPlot)
 app.post('/plot_tags', db.plot_tag.post)
 
 app.get('/plots_with_tags_and_locations', db.plots_with_tags.getPlotsWithTagsAndLocations)
-app.get('/plots_with_tags_and_locations/:id', db.plots_with_tags.getPlotsWithTagsAndLocationsById)
+app.get('/plots_with_tags_and_locations/:id', db.plots_with_tags.getPlotWithTagsAndLocationsById)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

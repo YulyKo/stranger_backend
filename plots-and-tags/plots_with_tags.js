@@ -22,7 +22,7 @@ const getPlotsWithTagsAndLocations = (request, response) => {
   });
 };
 
-const getPlotsWithTagsAndLocationsById = (request, response) => {
+const getPlotWithTagsAndLocationsById = (request, response) => {
   console.log('get Plots With Tags by plot id');
   
   const id = parseInt(request.params.id);
@@ -35,5 +35,5 @@ const getPlotsWithTagsAndLocationsById = (request, response) => {
 module.exports = {
     name,
     getPlotsWithTagsAndLocations,
-    getPlotsWithTagsAndLocationsById
+    getPlotWithTagsAndLocationsById
 };
