@@ -68,8 +68,12 @@ app.get('/plot_tags', db.plot_tag.get)
 app.get('/plot_tags/:id', db.plot_tag.getByIdForPlot)
 app.post('/plot_tags', db.plot_tag.post)
 
+app.get('/plots_with_tags_and_locations', db.plots_with_tags.getPlotsWithTagsAndLocations)
+app.get('/plots_with_tags_and_locations/:id', db.plots_with_tags.getPlotsWithTagsAndLocationsById)
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
+
 })
 
 // SELECT * FROM tags WHERE id IN (SELECT id_tag from plot_tag where id_plot = 7);
