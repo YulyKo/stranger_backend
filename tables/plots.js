@@ -10,60 +10,40 @@ const post = (request, response) => {
             if (error) {
                 throw error
             }
-            console.log(results);
-            add(results.rows[0].id, id_location, id_person, response);
+            const id_plot = results.rows[0].id;
+            if(id_location) {
+                postLocation(id_plot, id_location, response)
+            } else if(id_person) {
+                postPerson(id_plot, id_person, response)
+            }
             response.status(200);
         }
     );
 }
 
-// function getPLotMaxId() {
-//     let data;
-//   db_propertis.pool.query(
-//     'select max(id) from plots', (error, result) => {
-//       if (error) {
-//         throw error
-//       }
-//       console.log(result.rows[0].max + ' from get plot max id');
-//
-//           // return +result.rows[0].max;
-//       data = +result.rows[0].max;
-//     }
-//   );
-//   return data;
-// }
-
-function add(id_plot, id_location, id_person, response) {
-  // let id_plot = getPLotMaxId();
-  // console.log(id_plot);
-
-  if (id_location) {
+function postLocation(id_plot, id_location, response) {
     db_propertis.pool.query(
-      'INSERT INTO plot_location( id_plot, id_location) VALUES ($1, $2)',
-      [id_plot, id_location], (error) => {
-        if (error) {
-          throw error
+        'INSERT INTO plot_location( id_plot, id_location) VALUES ($1, $2)',
+        [id_plot, id_location], (error) => {
+            if (error) {
+                throw error
+            }
+            response.status(201).send(`Plot location added`)
         }
-        response.status(201).send(`Plot location added`)
-      }
     );
-  }
+}
 
-  if (id_person) {
-    console.log(id_plot + ' from if');
-    
+function postPerson(id_plot, id_person, response) {
     db_propertis.pool.query(
-      'INSERT INTO plot_person( id_plot, id_person) VALUES ($1, $2)',
-      [id_plot, id_person], (error) => {
-        if (error) {
-          throw error
+        'INSERT INTO plot_person( id_plot, id_person) VALUES ($1, $2)',
+        [id_plot, id_person], (error) => {
+            if (error) {
+                throw error
+            }
+            response.status(201).send(`Plot person added`)
         }
-        console.log('all is okay')
-      }
     );
-  }
-  console.log('add plot');
-};
+}
 
 const del = (request, response) => {
   const id = parseInt(request.params.id)
