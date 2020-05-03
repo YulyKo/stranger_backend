@@ -3,16 +3,65 @@ const db_propertis = require('./../db_propertis');
 const name = 'plots';
 
 const post = (request, response) => {
-  const { author, title, text, id_location, id_person } = request.body;
-  db_propertis.pool.query(
-    'INSERT INTO plots( author, title, text, id_location, id_person ) VALUES ($1, $2, $3, $4, $5)',
-    [author, title, text, id_location, id_person], (error, results) => {
-      if (error) {
-        throw error
+    const { author, title, text, description, id_location, id_person } = request.body;
+    db_propertis.pool.query(
+        'INSERT INTO plots( author, title, text, description) VALUES ($1, $2, $3, $4) returning id',
+        [author, title, text, description], (error, results) => {
+            if (error) {
+                throw error
+            }
+            console.log(results);
+            add(results.rows[0].id, id_location, id_person, response);
+            response.status(200);
+        }
+    );
+}
+
+// function getPLotMaxId() {
+//     let data;
+//   db_propertis.pool.query(
+//     'select max(id) from plots', (error, result) => {
+//       if (error) {
+//         throw error
+//       }
+//       console.log(result.rows[0].max + ' from get plot max id');
+//
+//           // return +result.rows[0].max;
+//       data = +result.rows[0].max;
+//     }
+//   );
+//   return data;
+// }
+
+function add(id_plot, id_location, id_person, response) {
+  // let id_plot = getPLotMaxId();
+  // console.log(id_plot);
+
+  if (id_location) {
+    db_propertis.pool.query(
+      'INSERT INTO plot_location( id_plot, id_location) VALUES ($1, $2)',
+      [id_plot, id_location], (error) => {
+        if (error) {
+          throw error
+        }
+        response.status(201).send(`Plot location added`)
       }
-      response.status(201).send(`Plot add with ID: ${results.insertId}`)
-    }
-  );
+    );
+  }
+
+  if (id_person) {
+    console.log(id_plot + ' from if');
+    
+    db_propertis.pool.query(
+      'INSERT INTO plot_person( id_plot, id_person) VALUES ($1, $2)',
+      [id_plot, id_person], (error) => {
+        if (error) {
+          throw error
+        }
+        console.log('all is okay')
+      }
+    );
+  }
   console.log('add plot');
 };
 
@@ -23,7 +72,6 @@ const del = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`Plot deleted with ID: ${id}`)
   });
 };
 
