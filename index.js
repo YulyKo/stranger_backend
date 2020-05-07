@@ -66,7 +66,7 @@ app.post('/art_tag', db.art_tag.post)
 
 app.get('/plot_tags', db.plot_tag.get)
 app.get('/plot_tags/:id', db.plot_tag.getByIdForPlot)
-app.post('/plot_tags', db.plot_tag.post)
+// app.post('/plot_tags', db.plot_tag.post)
 
 app.get('/plots_with_tags_and_locations', db.plots_with_tags.getPlotsWithTagsAndLocations)
 app.get('/plots_with_tags_and_locations/:id', db.plots_with_tags.getPlotWithTagsAndLocationsById)
