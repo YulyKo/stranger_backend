@@ -9,7 +9,7 @@ const type_tags = require('./tables/type_tags');
 const art_tag = require('./tables/art_tag');
 const persons = require('./tables/persons');
 const plot_tag = require('./tables/plots/plot_tag');
-const plots_with_tags = require('./tables/plots/plots_with_tags_locations_persons');
+const plots_with_tags_persons_locations = require('./tables/plots/plots_with_tags_locations_persons');
 
 module.exports = {
   plots,
@@ -23,5 +23,5 @@ module.exports = {
   type_tags,
   art_tag,
   plot_tag,
-  plots_with_tags,
+  plots_with_tags_persons_locations
 }
