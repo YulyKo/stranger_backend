@@ -30,7 +30,7 @@ app.post('/plots', db.plots.post)
 app.put('/plots/:id', db.plots.update)
 app.delete('/plots/:id', db.plots.del)
 
-app.get('/plot_by_id_with_tags_persons_and_locations/:id', db.plot_by_id_with_tags_persons_locations.getPlotWithTagsAndLocationsById)
+app.get('/plots_with_tags_persons_locations/:id', db.plot_by_id_with_tags_persons_locations.getPlotWithTagsAndLocationsById)
 app.get('/plots_with_tags_persons_locations', db.plots_with_tags_persons_locations.getPlotsWithTagsPersonsAndLocations)
 
 app.get('/arts', db.arts.get)
