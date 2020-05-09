@@ -113,7 +113,24 @@ function compareTagsToJSON(data) {
   }
 }
 
+const deleteWithTagsLocationsPersons = (request) => {
+  const id = parseInt(request.params.id)
+  deleteInfoOfPlotById('plot_tag', 'id_plot', id)
+  deleteInfoOfPlotById('plot_location', 'id_plot', id)
+  deleteInfoOfPlotById('plot_person', 'id_plot', id)
+  deleteInfoOfPlotById('plots', 'id', id)
+};
+
+function deleteInfoOfPlotById(nameOfTable, nameOfColumn, id_plot) {
+  db_propertis.pool.query(`DELETE FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id_plot], (error) => {
+    if (error) {
+      throw error
+    }
+  });
+}
+
 module.exports = {
   name,
-  getPlotWithTagsAndLocationsById
+  getPlotWithTagsAndLocationsById,
+  deleteWithTagsLocationsPersons
 };

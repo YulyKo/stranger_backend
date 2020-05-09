@@ -68,16 +68,6 @@ function postPersons(id_plot, id_persons) {
     );
 }
 
-const del = (request) => {
-  const id = parseInt(request.params.id)
-
-  db_propertis.pool.query('DELETE FROM plots WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-  });
-};
-
 const update = (request, response) => {
   const id = parseInt(request.params.id)
   const { author, title, text, id_location, id_person } = request.body
@@ -117,6 +107,5 @@ module.exports = {
   get,
   getById,
   update,
-  del,
   post,
 }
