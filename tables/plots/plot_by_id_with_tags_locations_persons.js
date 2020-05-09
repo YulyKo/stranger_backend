@@ -115,6 +115,7 @@ function compareTagsToJSON(data) {
 
 const deleteWithTagsLocationsPersons = (request) => {
   const id = parseInt(request.params.id)
+  console.log('delete plot')
   deleteInfoOfPlotById('plot_tag', 'id_plot', id)
   deleteInfoOfPlotById('plot_location', 'id_plot', id)
   deleteInfoOfPlotById('plot_person', 'id_plot', id)

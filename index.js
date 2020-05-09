@@ -25,11 +25,11 @@ app.put('/users/:id', db.users.update)
 app.delete('/users/:id', db.users.del)
 
 app.get('/plots', db.plots.get)
-app.get('/plots/:id', db.plots.getById)
+// app.get('/plots/:id', db.plots.getById)
 app.post('/plots', db.plots.post)
 app.put('/plots/:id', db.plots.update)
 
-app.delete('/plots_with_tags_persons_locations/:id', db.plot_by_id_with_tags_persons_locations.deleteWithTagsLocationsPersons)
+app.delete('/plots_with_tags_persons_locations/delete/:id', db.plot_by_id_with_tags_persons_locations.deleteWithTagsLocationsPersons)
 app.get('/plots_with_tags_persons_locations/:id', db.plot_by_id_with_tags_persons_locations.getPlotWithTagsAndLocationsById)
 app.get('/plots_with_tags_persons_locations', db.plots_with_tags_persons_locations.getPlotsWithTagsPersonsAndLocations)
 

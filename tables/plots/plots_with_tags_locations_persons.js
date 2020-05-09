@@ -13,7 +13,7 @@ const REQUEST_PLOT_LOCATIONS = `SELECT plot_location.id_plot, plot_location.id_l
 FROM plot_location LEFT JOIN locations ON locations.id = plot_location.id_location`;
 
 const getPlotsWithTagsPersonsAndLocations = (request, response) => {
-  console.log('get plots_with_tags');
+  console.log('get plots_with_tags getPlotsWithTagsPersonsAndLocations');
     db_propertis.pool.query(REQUEST_PLOT_INFO, (error, result) => {
       if (error) { throw error }
       comparePlotInfoToJSON(result.rows)
