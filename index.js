@@ -24,8 +24,6 @@ app.post('/users', db.users.create)
 app.put('/users/:id', db.users.update)
 app.delete('/users/:id', db.users.del)
 
-app.get('/plots', db.plots.get)
-// app.get('/plots/:id', db.plots.getById)
 app.post('/plots', db.plots.post)
 app.put('/plots/:id', db.plots.update)
 
@@ -35,9 +33,9 @@ app.get('/plots_with_tags_persons_locations', db.plots_with_tags_persons_locatio
 
 app.get('/arts', db.arts.get)
 app.get('/arts/:id', db.arts.getById)
-app.post('/arts', db.arts.post)
 app.put('/arts/:id', db.arts.update)
-app.delete('/arts/:id', db.arts.del)
+app.delete('/arts_with_tags/:id', db.art_with_tags.delArtWithTags)
+app.post('/arts_with_tags', db.art_with_tags.postArtWithTags)
 
 app.get('/locations', db.locations.get)
 app.get('/locations/:id', db.locations.getById)
@@ -69,7 +67,6 @@ app.post('/art_tag', db.art_tag.post)
 
 app.get('/plot_tags', db.plot_tag.get)
 app.get('/plot_tags/:id', db.plot_tag.getByIdForPlot)
-// app.post('/plot_tags', db.plot_tag.post)
 
 
 app.listen(port, () => {

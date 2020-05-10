@@ -7,6 +7,7 @@ const relationships = require('./tables/relationships');
 const type_relationships = require('./tables/type_relationship');
 const type_tags = require('./tables/type_tags');
 const art_tag = require('./tables/arts/art_tag');
+const art_with_tags = require('./tables/arts/art_with_tags');
 const persons = require('./tables/persons');
 const plot_tag = require('./tables/plots/plot_tag');
 const plots_with_tags_persons_locations = require('./tables/plots/plots_with_tags_locations_persons');
@@ -23,6 +24,7 @@ module.exports = {
   type_relationships,
   type_tags,
   art_tag,
+  art_with_tags,
   plot_tag,
   plots_with_tags_persons_locations,
   plot_by_id_with_tags_persons_locations,
