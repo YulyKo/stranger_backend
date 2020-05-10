@@ -1,12 +1,13 @@
-const db_propertis = require('./../db_propertis');
+const db_propertis = require('../../db_propertis');
 
 const name = 'art_tag';
 
 
 const get = (request, response) => {
   console.log('get art_tag');
+  const REQUEST_STRING = `select * from tags where id_type = (select id from type_tags where type_name like 'art')`
 
-  db_propertis.pool.query('SELECT * FROM art_tag', (error, results) => {
+  db_propertis.pool.query(REQUEST_STRING, (error, results) => {
     if(error) { throw error }
     response.status(200).json(results.rows)
   });
