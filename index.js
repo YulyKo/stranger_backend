@@ -31,10 +31,10 @@ app.delete('/plots_with_tags_persons_locations/delete/:id', db.plot_by_id_with_t
 app.get('/plots_with_tags_persons_locations/:id', db.plot_by_id_with_tags_persons_locations.getPlotWithTagsAndLocationsById)
 app.get('/plots_with_tags_persons_locations', db.plots_with_tags_persons_locations.getPlotsWithTagsPersonsAndLocations)
 
-app.get('/arts', db.arts.get)
-app.get('/arts/:id', db.arts.getById)
+app.get('/arts', db.art_with_tags.getArtWithTags)
+app.get('/arts/:id', db.art_with_tags.getByIdWithTags)
 app.put('/arts/:id', db.arts.update)
-app.delete('/arts_with_tags/:id', db.art_with_tags.delArtWithTags)
+app.delete('/arts_with_tags/delete/:id', db.art_with_tags.delArtWithTags)
 app.post('/arts_with_tags', db.art_with_tags.postArtWithTags)
 
 app.get('/locations', db.locations.get)
