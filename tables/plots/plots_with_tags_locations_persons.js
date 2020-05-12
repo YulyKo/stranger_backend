@@ -1,4 +1,4 @@
-const db_propertis = require('../../db_propertis');
+const db_propertis = require('../../db_properties');
 
 const name = 'plots_with_tags_persons_locations';
 

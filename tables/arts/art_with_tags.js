@@ -1,4 +1,4 @@
-const db_propertis = require('../../db_propertis');
+const db_propertis = require('../../db_properties');
 const format = require('pg-format');
 
 const postArtWithTags = (request, response) => {
