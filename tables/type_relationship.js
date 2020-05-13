@@ -29,7 +29,7 @@ const post = (request, response) => {
     console.log('error');
   } else {
     db_propertis.pool.query(
-      'INSERT INTO type_relationship ( name ) VALUES ($1)',
+      `INSERT INTO type_relationship ( name ) VALUES ($1)`,
       [name], (error, results) => {
         if (error) {
           throw error

@@ -3,10 +3,12 @@ const db_propertis = require('../db_properties');
 const name = 'relationships';
 
 const post = (request, response) => {
-  const { id_person, id_person2, id_type_relationship } = request.body;
+  const { id_person, id_person2, id_type_relationship, reasons } = request.body;
+  console.log(reasons)
   db_propertis.pool.query(
-    'INSERT INTO relationships ( id_person, id_person2, id_type_relationship ) VALUES ($1, $2, $3)',
-    [id_person, id_person2, id_type_relationship], (error, results) => {
+    `INSERT INTO relationships ( id_person, id_person2, id_type_relationship, reasons )
+     VALUES ($1, $2, $3, $4)`,
+    [id_person, id_person2, id_type_relationship, reasons], (error, results) => {
       if (error) {
         throw error
       }

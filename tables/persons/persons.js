@@ -1,6 +1,6 @@
 const db_properties = require('../../db_properties');
-
 const _by_id = require("../../common/_by_id");
+
 const name = 'persons';
 
 const post = (request, response) => {
@@ -57,7 +57,7 @@ const getById = (request, response) => {
   
   const id = parseInt(request.params.id);
   db_properties.pool.query('SELECT * FROM persons WHERE id = $1 limit 1', [id], (error, result) => {
-    if (error) { throw error };
+    if (error) { throw error }
     response.status(200).json(result.rows);
   });
 };
