@@ -4,10 +4,11 @@ const format = require('pg-format');
 const postArtWithTags = (request, response) => {
   console.log('i am a live')
   const { author, title, description, url, tags } = request.body;
+  if (tags !== []) console.log(tags)
   db_propertis.pool.query(
     'INSERT INTO arts( author, title, description, url ) VALUES ($1, $2, $3, $4) returning id',
     [ author, title, description, url ], (error, results) => {
-      if (error) { throw error }
+      if (error) { console.log(error.message) }
       if (tags !== []) postTagsByNewArt(results.rows[0].id, tags)
       response.status(201).send(`Art add with tags`)
     }
@@ -22,7 +23,7 @@ function postTagsByNewArt(id_art, tags) {
   })
   const requestString = format(`INSERT INTO art_tag (id_art, id_tag) VALUES %L`, values);
   db_propertis.pool.query( requestString,
-    (error) =>  { if (error) { throw error } }
+    (error) =>  { if (error) { console.log(error.message) } }
   )
 }
 

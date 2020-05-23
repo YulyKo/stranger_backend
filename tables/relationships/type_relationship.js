@@ -1,4 +1,4 @@
-const db_propertis = require('../db_properties');
+const db_propertis = require('../../db_properties');
 
 const name = 'type_relationship';
 

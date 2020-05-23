@@ -3,8 +3,9 @@ const users = require('./tables/users');
 const arts = require('./tables/arts/arts');
 const locations = require('./tables/locations');
 const tags = require('./tables/tags');
-const relationships = require('./tables/relationships');
-const type_relationships = require('./tables/type_relationship');
+const relationships = require('./tables/relationships/relationships');
+const type_relationships = require('./tables/relationships/type_relationship');
+const relationships_with_data_of_all_persons = require('./tables/relationships/relationships_with_data_of_all_persons')
 const type_tags = require('./tables/type_tags');
 const art_tag = require('./tables/arts/art_tag');
 const art_with_tags = require('./tables/arts/art_with_tags');
@@ -20,6 +21,7 @@ module.exports = {
   locations,
   tags,
   relationships,
+  relationships_with_data_of_all_persons,
   persons,
   type_relationships,
   type_tags,

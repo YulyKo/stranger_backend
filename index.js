@@ -49,7 +49,7 @@ app.post('/persons', db.persons.post)
 app.put('/persons/:id', db.persons.update)
 app.delete('/persons/:id', db.persons.del)
 
-app.get('/relationships', db.relationships.get)
+app.get('/relationships', db.relationships_with_data_of_all_persons.get)
 app.get('/relationships/:id', db.relationships.getById)
 app.post('/relationships', db.relationships.post)
 app.put('/relationships/:id', db.relationships.update)

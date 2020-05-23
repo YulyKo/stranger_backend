@@ -1,4 +1,4 @@
-const db_propertis = require('../db_properties');
+const db_propertis = require('../../db_properties');
 
 const name = 'relationships';
 
@@ -46,14 +46,6 @@ const update = (request, response) => {
   )
 }
 
-const get = (request, response) => {
-  console.log('get plots');
-
-  db_propertis.pool.query('SELECT * FROM relationships', (error, results) => {
-    if(error) throw error
-    response.status(200).json(results.rows)
-  });
-};
 
 const getById = (request, response) => {
   console.log('get location by id');
@@ -67,7 +59,6 @@ const getById = (request, response) => {
 
 module.exports = {
   name,
-  get,
   getById,
   del,
   update,
