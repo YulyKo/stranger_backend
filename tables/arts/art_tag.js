@@ -1,7 +1,5 @@
 const db_propertis = require('../../db_properties');
-
 const name = 'art_tag';
-
 
 const get = (request, response) => {
   console.log('get art_tag');
@@ -23,7 +21,6 @@ const getByArtId = (request, response) => {
   });
 };
 
-
 const post = (request, response) => {
   const { id_art, id_tag } = request.body;
   db_propertis.pool.query(
@@ -35,7 +32,6 @@ const post = (request, response) => {
   );
   console.log('add art_tag tag');
 };
-
 
 
 module.exports = {

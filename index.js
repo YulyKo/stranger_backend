@@ -60,6 +60,7 @@ app.get('/type_tag', db.type_tags.get)
 app.get('/type_relationships', db.type_relationships.get)
 app.get('/type_relationships/:id', db.type_relationships.getById)
 app.post('/type_relationships', db.type_relationships.post)
+app.delete('/type_relationships/:id', db.type_relationships.del)
 
 app.get('/art_tag', db.art_tag.get)
 app.get('/art_tag/:id', db.art_tag.getByArtId)
@@ -68,6 +69,8 @@ app.post('/art_tag', db.art_tag.post)
 app.get('/plot_tags', db.plot_tag.get)
 app.get('/plot_tags/:id', db.plot_tag.getByIdForPlot)
 
+app.delete('/tags/delete/:id', db.tags.deleteById)
+app.post('/tags', db.tags.post)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

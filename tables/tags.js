@@ -1,4 +1,5 @@
 const db_propertis = require('../db_properties');
+const _by_id = require('../common/_by_id')
 
 const name = 'tags';
 
@@ -13,7 +14,7 @@ const post = (request, response) => {
       response.status(201).send(`Plot add with ID: ${results.insertId}`)
     }
   );
-  console.log('add plot tag');
+  console.log('add tag');
 };
 
 const del = (request, response) => {
@@ -27,20 +28,15 @@ const del = (request, response) => {
   });
 };
   
-  
 const update = (request, response) => {
   const id = parseInt(request.params.id)
-  const { author, title, text, id_location, id_person } = request.body
-// author, title, text, id_location, id_person
+  const { author, id_type, name, bg_color, text_color } = request.body
   db_propertis.pool.query(
-      // id_type, author, name, bg_color, text_color
     'UPDATE tags SET id_type = $1, author = $2, name = $3, bg_color = $4, text_color = $5 WHERE id = $6',
     [id_type, author, name, bg_color, text_color],
     (error, results) => {
-      if (error) {
-          throw error
-      }
-      response.status(200).send(`User modified with ID: ${id}`)
+      if (error) { throw error }
+      response.status(200).send(`tag modified with ID: ${id}`)
     }
   )
 }
@@ -54,7 +50,7 @@ const get = (request, response) => {
   });
 };
     
-const getById = (request, response) => {
+const getByTypeId = (request, response) => {
   console.log('get by id');
 
   const name = parseInt(request.params.name);
@@ -65,12 +61,32 @@ const getById = (request, response) => {
     response.status(200).json(result.rows);
   });
 };
+
+const deleteById = (request, response) => {
+  const { id } = request.params;
+  db_propertis.pool.query(
+    'SELECT id_type from tags where id = $1',
+    [id], (error, results) => {
+      if (error) { throw error }
+      let type_tag_id = results.rows[0].id_type
+      if (type_tag_id === 1) {
+        _by_id.deleteInfoOfSmthById('plot_tag', 'id_tag', id );
+        _by_id.deleteInfoOfSmthById('tags', 'id', id );
+      }
+      if (type_tag_id === 2) {
+        _by_id.deleteInfoOfSmthById('art_tag', 'id_tag', id );
+        _by_id.deleteInfoOfSmthById('tags', 'id', id );
+      }
+    });
+  console.log('del tag')
+};
   
 module.exports = {
   name,
   get,
-  getById,
+  getByTypeId,
   post,
   del,
   update,
+  deleteById,
 };

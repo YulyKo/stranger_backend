@@ -22,10 +22,6 @@ const getByIdForPlot = (request, response) => {
   });
 };
 
-
-
-
-
 module.exports = {
   name,
   get,

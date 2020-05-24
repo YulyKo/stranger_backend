@@ -1,4 +1,5 @@
 const db_propertis = require('../../db_properties');
+const _by_id = require('../../common/_by_id')
 
 const name = 'type_relationship';
 
@@ -41,9 +42,18 @@ const post = (request, response) => {
   console.log('add type_relationship');
 };
 
+const del = (request, response) => {
+  const { id } = request.params;
+  console.log(id)
+  _by_id.deleteInfoOfSmthById('relationships', 'id_type_relationship', id );
+  _by_id.deleteInfoOfSmthById('type_relationship', 'id', id );
+  console.log('del type')
+};
+
 module.exports = {
   name,
   get,
   post,
   getById,
+  del,
 };
