@@ -8,7 +8,6 @@ function deleteInfoOfSmthById(nameOfTable, nameOfColumn, id) {
   });
 }
 
-
 module.exports = {
   deleteInfoOfSmthById,
 }
