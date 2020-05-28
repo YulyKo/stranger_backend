@@ -1,4 +1,5 @@
-const db_propertis = require('../../db_properties');
+const db_properties = require('../../db_properties');
+const _by_id = require('../../common/_by_id');
 
 const name = 'plot_by_id_with_all_data';
 
@@ -28,7 +29,7 @@ const getPlotWithTagsAndLocationsById = (request, response) => {
 };
   
 function getPlotInfoById(id_plot, response) {
-  db_propertis.pool.query(REQUEST_PLOT_INFO + ' WHERE id = $1', [id_plot], (error, result) => {
+  db_properties.pool.query(REQUEST_PLOT_INFO + ' WHERE id = $1', [id_plot], (error, result) => {
     if (error) { throw error }
     comparePlotToJSON(result.rows[0])
     getTagsByPlotId(id_plot, response);
@@ -36,38 +37,53 @@ function getPlotInfoById(id_plot, response) {
 }
   
 function getTagsByPlotId(id_plot, response) {
-  db_propertis.pool.query(
+  db_properties.pool.query(
     REQUEST_PLOT_TAGS + ` WHERE plot_tag.id_plot = $1`,
     [id_plot], (error, results) => {
       if (error) { throw error }
       let res = results.rows
-      compareTagsToJSON(res)
+      if(res !== []) compareTagsToJSON(res)
       getPersonsByPlotId(id_plot, response)
     }
   )
 }
   
 function getPersonsByPlotId(id_plot, response) {
-  db_propertis.pool.query(
+  db_properties.pool.query(
     REQUEST_PLOT_PERSONS + ` WHERE plot_person.id_plot = $1`,
     [id_plot], (error, results) => {
       if (error) { throw error }
       let res = results.rows
-      comparePersonsToJSON(res);
+      if(res !== []) comparePersonsToJSON(res);
       getLocationsByPlotId(id_plot, response)
      }
   )
 }
   
 function getLocationsByPlotId(id_plot, response) {
-  db_propertis.pool.query(
+  db_properties.pool.query(
     REQUEST_PLOT_LOCATIONS + ` WHERE plot_location.id_plot = $1`,
     [id_plot], (error, results) => {
       if (error) { throw error }
       let res = results.rows
-      compareLocationsToJSON(res)
+      if(res !== []) compareLocationsToJSON(res)
 
       response.status(200).json(resultJSON)
+      response.on('finish', function() {
+        resultJSON = {
+          "plot": {
+            "data": {
+              "title": "",
+              "description": "",
+              "text": "",
+              "author": ""
+            },
+            "tags": [],
+            "locations": [],
+            "persons": [],
+          }
+        }
+      });
     }
   )
 }
@@ -109,24 +125,58 @@ function compareTagsToJSON(data) {
       "bg_color": data[i].bg_color,
       "text_color": data[i].text_color
     };
+    console.log(item);
+    
     resultJSON.plot.tags.push(item)
   }
 }
 
-const deleteWithTagsLocationsPersons = (request) => {
+// delete
+
+const deleteWithTagsLocationsPersons = (request, response) => {
   const id = parseInt(request.params.id)
   console.log('delete plot')
-  deleteInfoOfPlotById('plot_tag', 'id_plot', id)
-  deleteInfoOfPlotById('plot_location', 'id_plot', id)
-  deleteInfoOfPlotById('plot_person', 'id_plot', id)
-  deleteInfoOfPlotById('plots', 'id', id)
+  getInfoOfTag('plot_tag', 'id_plot', id)
 };
 
-function deleteInfoOfPlotById(nameOfTable, nameOfColumn, id_plot) {
-  db_propertis.pool.query(`DELETE FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id_plot], (error) => {
-    if (error) {
-      throw error
-    }
+function getInfoOfTag(nameOfTable, nameOfColumn, id) {
+  db_properties.pool.query(
+    `SELECT FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id], 
+    (error, res) => {
+      if (error) { throw error }
+      if (res.rows !== []) _by_id.deleteInfoOfSmthById(nameOfTable, nameOfColumn, id)
+      getInfoOfLocation('plot_location', 'id_plot', id)
+  });
+}
+
+function getInfoOfLocation(nameOfTable, nameOfColumn, id) {
+  db_properties.pool.query(
+    `SELECT FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id], 
+    (error, res) => {
+      if (error) { throw error }
+      if (res.rows !== []) _by_id.deleteInfoOfSmthById(nameOfTable, nameOfColumn, id)
+      getInfoOfPerson('plot_person', 'id_plot', id)
+  });
+}
+
+function getInfoOfPerson(nameOfTable, nameOfColumn, id) {
+  db_properties.pool.query(
+    `SELECT FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id], 
+    (error, res) => {
+      if (error) { throw error }
+      if (res.rows !== []) _by_id.deleteInfoOfSmthById(nameOfTable, nameOfColumn, id)
+      getInfoOfPlot('plots', 'id', id)
+  });
+}
+
+function getInfoOfPlot(nameOfTable, nameOfColumn, id) {
+  console.log('plot id: '+ id);
+  
+  db_properties.pool.query(
+    `SELECT FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id], 
+    (error, res) => {
+      if (error) { throw error }
+      _by_id.deleteInfoOfSmthById(nameOfTable, nameOfColumn, id)
   });
 }
 
