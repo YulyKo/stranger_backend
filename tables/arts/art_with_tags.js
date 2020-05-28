@@ -30,12 +30,20 @@ function postTagsByNewArt(id_art, tags) {
 const delArtWithTags = (request) => {
   console.log('del art with tags')
   const id = parseInt(request.params.id)
-  deleteInfoOfArtById('art_tag', 'id_art', id)
-  deleteInfoOfArtById('arts', 'id', id)
+  deleteTagOfArtById(id)
 };
 
-function deleteInfoOfArtById(nameOfTable, nameOfColumn, id_art) {
-  db_propertis.pool.query(`DELETE FROM ${nameOfTable} WHERE ${nameOfColumn} = $1;`, [id_art], (error) => {
+function deleteTagOfArtById(id_art) {
+  db_propertis.pool.query(`DELETE FROM art_tag WHERE id_art = $1;`, [id_art], (error) => {
+    if (error) {
+      throw error
+    }
+    deleteArtById(id_art)
+  });
+}
+
+function deleteArtById(id_art) {
+  db_propertis.pool.query(`DELETE FROM arts WHERE id = $1;`, [id_art], (error) => {
     if (error) {
       throw error
     }
@@ -88,7 +96,6 @@ const getArtWithTags = (request, response) => {
   console.log('get arts with tags');
   db_propertis.pool.query('SELECT id, title, url FROM arts', (error, results) => {
     if(error) throw error
-    console.log(results.rows)
     compareArtInfoToJSON(results.rows)
     getArtTags(response)
   });
