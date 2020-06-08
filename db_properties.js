@@ -5,10 +5,10 @@ const pool = new POOL({
   database: 'stranger',
   password: 'admin',
   port: 5432,
-  connectionString: 'process.env.postgresql-colorful-86905',
-  ssl: {
-    rejectUnauthorized: false
-  }
+  // connectionString: 'process.env.postgresql-colorful-86905',
+  // ssl: {
+  //   rejectUnauthorized: false
+  // }
 });
 
 module.exports = {

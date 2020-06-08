@@ -1,11 +1,9 @@
-const db_propertis = require('../../db_properties');
-
-const name = 'relationships';
+const db_properties = require('../../db_properties');
 
 const post = (request, response) => {
   const { id_person, id_person2, id_type_relationship, reasons } = request.body;
   console.log(reasons)
-  db_propertis.pool.query(
+  db_properties.pool.query(
     `INSERT INTO relationships ( id_person, id_person2, id_type_relationship, reasons )
      VALUES ($1, $2, $3, $4)`,
     [id_person, id_person2, id_type_relationship, reasons], (error, results) => {
@@ -15,13 +13,12 @@ const post = (request, response) => {
       response.status(201).send(`relationship add with ID: ${results.insertId}`)
     }
   );
-  console.log('add relationship');
 };
 
 const del = (request, response) => {
   const id = parseInt(request.params.id)
 
-  db_propertis.pool.query('DELETE FROM relationships WHERE id = $1', [id], (error, results) => {
+  db_properties.pool.query('DELETE FROM relationships WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -29,38 +26,25 @@ const del = (request, response) => {
   });
 };
 
-
-const update = (request, response) => {
-  const id = parseInt(request.params.id)
-  const { id_person, id_person2, id_type_relationship } = request.body
-
-  db_propertis.pool.query(
-    'UPDATE relationships SET id_person = $1, id_person2 = $2, id_type_relationship = $3 WHERE id = $4',
-    [id_person, id_person2, id_type_relationship, id],
+const get = (request, response) => {
+  db_properties.pool.query(
+    `SELECT relationships.id, 
+    persons.name as "person_name", persons.sex as "person_sex", persons.age as "person_age", persons.shot_description as "person_description", 
+    persons_1.name as "person2_name", persons_1.sex  as "person2_sex", persons_1.age as "person2_age", persons_1.shot_description as "person2_description", 
+    type_relationship.name as "type_name", relationships.reasons
+    FROM persons AS persons_1 INNER JOIN (type_relationship INNER JOIN 
+                        (persons INNER JOIN relationships ON persons.id = relationships.id_person) 
+                        ON type_relationship.id = relationships.id_type_relationship) 
+                        ON persons_1.id = relationships.id_person2`,
     (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).send(`Location modified with ID: ${id}`)
+      if (error) { console.log(error.message) }
+      response.status(200).json(results.rows);
     }
   )
 }
 
-
-const getById = (request, response) => {
-  console.log('get location by id');
-
-  const id = parseInt(request.params.id);
-  db_propertis.pool.query('SELECT * FROM relationships WHERE id = $1', [id], (error, result) => {
-    if (error) { throw error }
-    response.status(200).json(result.rows);
-  });
-};
-
 module.exports = {
-  name,
-  getById,
   del,
-  update,
   post,
+  get,
 };

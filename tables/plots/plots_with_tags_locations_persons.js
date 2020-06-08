@@ -1,7 +1,5 @@
 const db_propertis = require('../../db_properties');
 
-const name = 'plots_with_tags_persons_locations';
-
 let plotsJSON = [];
 
 const REQUEST_PLOT_INFO = `SELECT id, title, description, text, author FROM plots`;
@@ -13,12 +11,11 @@ const REQUEST_PLOT_LOCATIONS = `SELECT plot_location.id_plot, plot_location.id_l
 FROM plot_location LEFT JOIN locations ON locations.id = plot_location.id_location`;
 
 const getPlotsWithTagsPersonsAndLocations = (request, response) => {
-  console.log('get plots_with_tags getPlotsWithTagsPersonsAndLocations');
-    db_propertis.pool.query(REQUEST_PLOT_INFO, (error, result) => {
-      if (error) { throw error }
-      comparePlotInfoToJSON(result.rows)
-      getPlotTags(response);
-    });
+  db_propertis.pool.query(REQUEST_PLOT_INFO, (error, result) => {
+    if (error) { throw error }
+    comparePlotInfoToJSON(result.rows)
+    getPlotTags(response);
+  });
 }
 
 function getPlotTags(response) {
@@ -41,7 +38,6 @@ function getPlotLocations(response) {
   db_propertis.pool.query(REQUEST_PLOT_LOCATIONS, (error, result) => {
     if (error) { throw error }
     comparePlotLocationsToJSON(result.rows)
-
     response.status(200).json(plotsJSON)
   });
 }
@@ -88,7 +84,6 @@ function comparePlotPersonsToJSON(persons) {
             "id": persons[index_person].id,
             "name": persons[index_person].name
           };
-
           plotsJSON[index_plot].persons.push(item)
         }
       }
@@ -112,6 +107,5 @@ function comparePlotTagsToJSON(tags) {
 }
 
 module.exports = {
-    name,
-    getPlotsWithTagsPersonsAndLocations,
+  getPlotsWithTagsPersonsAndLocations,
 };
