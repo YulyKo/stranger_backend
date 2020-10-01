@@ -1,17 +1,20 @@
-const db_propertis = require('../../db_properties');
+const db_properties = require('../../db_properties');
+const _likes = require('../../common/_likes');
+const _by_id = require('../../common/_by_id');
 
 let plotsJSON = [];
 
-const REQUEST_PLOT_INFO = `SELECT id, title, description, text, author FROM plots`;
+const REQUEST_PLOT_INFO = `SELECT * FROM plots`;
 const REQUEST_PLOT_TAGS = `SELECT plot_tag.id_plot, tags.id, tags.name, tags.bg_color, tags.text_color 
 FROM plot_tag JOIN tags ON tags.id = plot_tag.id_tag`;
 const REQUEST_PLOT_PERSONS = `SELECT plot_person.id_plot, persons.id, persons.name FROM plot_person 
 Left JOIN persons ON persons.id = plot_person.id_person`;
 const REQUEST_PLOT_LOCATIONS = `SELECT plot_location.id_plot, plot_location.id_location, locations.name, locations.photo_url, locations.author 
 FROM plot_location LEFT JOIN locations ON locations.id = plot_location.id_location`;
+const REQUEST_PLOT_USERS_LIKES = `SELECT * from user_likes_plot`;
 
 const getPlotsWithTagsPersonsAndLocations = (request, response) => {
-  db_propertis.pool.query(REQUEST_PLOT_INFO, (error, result) => {
+  db_properties.pool.query(REQUEST_PLOT_INFO, (error, result) => {
     if (error) { throw error }
     comparePlotInfoToJSON(result.rows)
     getPlotTags(response);
@@ -19,7 +22,7 @@ const getPlotsWithTagsPersonsAndLocations = (request, response) => {
 }
 
 function getPlotTags(response) {
-  db_propertis.pool.query(REQUEST_PLOT_TAGS, (error, result) => {
+  db_properties.pool.query(REQUEST_PLOT_TAGS, (error, result) => {
     if (error) { throw error }
     comparePlotTagsToJSON(result.rows)
     getPlotPersons(response);
@@ -27,7 +30,7 @@ function getPlotTags(response) {
 }
 
 function getPlotPersons(response) {
-  db_propertis.pool.query(REQUEST_PLOT_PERSONS, (error, result) => {
+  db_properties.pool.query(REQUEST_PLOT_PERSONS, (error, result) => {
     if (error) { throw error }
     comparePlotPersonsToJSON(result.rows)
     getPlotLocations(response);
@@ -35,9 +38,18 @@ function getPlotPersons(response) {
 }
 
 function getPlotLocations(response) {
-  db_propertis.pool.query(REQUEST_PLOT_LOCATIONS, (error, result) => {
+  db_properties.pool.query(REQUEST_PLOT_LOCATIONS, (error, result) => {
     if (error) { throw error }
     comparePlotLocationsToJSON(result.rows)
+    getPlotUserLikes(response)
+  });
+}
+
+function getPlotUserLikes(response) {
+  db_properties.pool.query(REQUEST_PLOT_USERS_LIKES, (error, result) => {
+    if (error) { throw error }
+    console.log(result.rows)
+    comparePlotUsersLikesToJSON(result.rows)
     response.status(200).json(plotsJSON)
   });
 }
@@ -51,10 +63,12 @@ function comparePlotInfoToJSON(plots) {
         "description": plots[index].description,
         "text": plots[index].text,
         "author": plots[index].author,
+        "likes": plots[index].likes,
       },
       tags: [],
       locations: [],
       persons: [],
+      users_likes: [],
     }
   }
 }
@@ -106,6 +120,39 @@ function comparePlotTagsToJSON(tags) {
   }
 }
 
+function comparePlotUsersLikesToJSON(likes) {
+  for (let index_plot = 0; index_plot < plotsJSON.length; index_plot++) {
+    for (let index = 0; index < likes.length; index++) {
+      if (+plotsJSON[index_plot].data.id === +likes[index].plot_id) {
+        plotsJSON[index_plot].users_likes.push(likes[index].user_login)
+      }
+    }
+  }
+}
+
+function updateLikesInPlot(request, response) {
+  const { likes } = request.body;
+  const id = request.params.id;
+  console.log(likes + ' | ' + id);
+  _likes.update_likes('plots', likes, id)
+}
+
+function insertUserLikesPlot(request, response) {
+  const { id, login } = request.body;
+  console.log(login)
+  let categoryName = _likes.categoryName('plots')
+  _likes.insert_users_like(categoryName, login, id)
+}
+
+function deleteUserLikesPlot(request, response) {
+  const { id } = request.body;
+  let categoryName = _likes.categoryName('plots')
+  _by_id.deleteInfoOfSmthById(categoryName, 'plot_id', id)
+}
+
 module.exports = {
   getPlotsWithTagsPersonsAndLocations,
+  updateLikesInPlot,
+  insertUserLikesPlot,
+  deleteUserLikesPlot,
 };

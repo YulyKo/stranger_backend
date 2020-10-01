@@ -9,6 +9,7 @@ const persons = require('./tables/persons');
 const plots_with_tags_persons_locations = require('./tables/plots/plots_with_tags_locations_persons');
 const plot_by_id_with_tags_persons_locations = require('./tables/plots/plot_by_id_with_tags_locations_persons');
 const team = require('./tables/team');
+const likes = require('./common/_likes')
 
 module.exports = {
   users,
@@ -22,4 +23,5 @@ module.exports = {
   plots_with_tags_persons_locations,
   plot_by_id_with_tags_persons_locations,
   team,
+  likes,
 }

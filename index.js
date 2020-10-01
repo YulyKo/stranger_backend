@@ -55,6 +55,9 @@ app.post('/tags', db.tags.post)
 
 app.get('/team', db.team.get)
 
+app.delete('/deleteUserLikesPlot', db.plots_with_tags_persons_locations.deleteUserLikesPlot)
+app.put('/updateLikesInPlot/:id', db.plots_with_tags_persons_locations.updateLikesInPlot)
+app.post('/insertUserLikesPlot', db.plots_with_tags_persons_locations.insertUserLikesPlot)
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
