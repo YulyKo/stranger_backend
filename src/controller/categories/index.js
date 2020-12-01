@@ -1,3 +1,3 @@
-const plots = require('./plots');
+const plots = require('./plots/index');
 
 module.exports = { plots };
