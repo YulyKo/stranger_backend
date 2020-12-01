@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const logger = require('../../../utils/logger')(__filename);
 const createError = require('http-errors');
 const {
@@ -114,8 +113,6 @@ const getAllPlots = async (req, res, next) => {
     comparePlotInfoToJSON(allPlots);
     getPlotTags(res);
     logger.info(`found ${allPlots.length}`);
-    
-    // res.status(200).json(plotsJSON);
   } catch (error) {
     logger.error(error.message);
     next(createError(500, error.message));
