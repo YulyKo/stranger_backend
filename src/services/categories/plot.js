@@ -13,6 +13,14 @@ const getAll = async () => {
   return plots;
 };
 
+const getById = async (id) => {
+  console.log('get by id');
+  const [ plot ] = await knex('plots')
+    .where({ id });
+  return plot;
+};
+
 module.exports = {
   getAll,
+  getById,
 };
