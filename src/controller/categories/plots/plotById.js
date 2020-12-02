@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 const logger = require('../../../utils/logger')(__filename);
 const createError = require('http-errors');
 const { categories: { plot, tag, location, person } } = require('../../../services');
-
 
 let resultJSON = {
   'plot': {
@@ -16,11 +14,6 @@ let resultJSON = {
     'locations': [],
     'persons': [],
   }
-};
-
-const getPlotWithTagsAndLocationsById = (request, response) => {
-  const id = parseInt(request.params.id);
-  getPlotInfoById(id, response);
 };
   
 async function getPlotInfoById(id, response) {
@@ -72,7 +65,7 @@ function comparePlotToJSON(data) {
   resultJSON.plot.data.description = data.description;
   resultJSON.plot.data.text = data.text;
 }
-  
+
 function comparePersonsToJSON(data) {
   for (let i = 0; i < data.length; i++) {
     let item = {
@@ -82,7 +75,7 @@ function comparePersonsToJSON(data) {
     resultJSON.plot.persons.push(item);
   }
 }
-  
+
 function compareLocationsToJSON(data) {
   for (let i = 0; i < data.length; i++) {
     let item = {
