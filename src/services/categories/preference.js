@@ -6,8 +6,12 @@ const getAllForPlots = async () => {
 const getAllForLocations = async () => {
   return await knex('user_likes_location');
 };
+const getAllForPersons = async () => {
+  return knex('user_likes_person');
+};
 
 module.exports = {
   getAllForPlots,
   getAllForLocations,
+  getAllForPersons,
 };

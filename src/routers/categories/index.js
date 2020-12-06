@@ -9,4 +9,7 @@ router.get('/plot/:id', categories.plot.plotById.get);
 router.get('/location', categories.location.getAll);
 router.get('/location/:id', categories.location.get);
 
+// persons
+router.get('/person', categories.person.getAll);
+
 module.exports = router;

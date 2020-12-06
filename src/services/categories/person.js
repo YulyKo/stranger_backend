@@ -22,7 +22,12 @@ const getForPlot = async (id) => {
   return persons;
 };
 
+const getAll = async () => {
+  return knex('persons');
+};
+
 module.exports = {
   getAllForPlots,
   getForPlot,
+  getAll,
 };
