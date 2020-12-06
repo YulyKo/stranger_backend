@@ -13,17 +13,18 @@ function comparePreferencesToJSON(preferences) {
 }
 
 async function getPreferences(res) {
-  const preferences = preference.getAllForPersons();
-  preferences.then((data) => {
-    if (data.length !== 0) comparePreferencesToJSON(preferences);
-  });
+  const preferences = await preference.getAllForPersons();
+  // console.log(preferences);
+  if (preferences.length !== 0) resultJSON = comparePreferencesToJSON(preferences);
   res.status(200).send(resultJSON);
 }
 
 async function getPersons(res) {
   const persons = await person.getAll();
-  if (persons !== []) resultJSON = persons;
-  getPreferences(res);
+  if (persons !== []) {
+    resultJSON = persons;
+    getPreferences(res);
+  }
 }
 
 const getAll = async (req, res, next) => {

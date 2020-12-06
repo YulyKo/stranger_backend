@@ -9,6 +9,9 @@ const getAllForLocations = async () => {
 const getAllForPersons = async () => {
   return knex('user_likes_person');
 };
+const getAllForArts = async () => {
+  return knex('user_likes_atr');
+};
 const getForPersonByID = async (id) => {
   return knex('user_likes_person').where({ 'person_id': id });
 };
@@ -17,5 +20,6 @@ module.exports = {
   getAllForPlots,
   getAllForLocations,
   getAllForPersons,
+  getAllForArts,
   getForPersonByID,
 };
