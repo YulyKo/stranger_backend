@@ -32,7 +32,7 @@ async function getUsersLikes(res) {
   res.status(200).send(resultJSON);
 }
 
-const get = async (req, res, next) => {
+const getAll = async (req, res, next) => {
   try {
     logger.info('get all locations');
     getLocations(res);
@@ -45,12 +45,11 @@ const get = async (req, res, next) => {
   }
 };
 
-const getByID = async (req, res, next) => {
+const get = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     logger.info(`get location by ${id}`);
     const locationByID = await location.getByID(id);
-    logger.info(Object.keys(locationByID));
     res.status(200).send(locationByID);
   } catch (error) {
     logger.error(error.message);
@@ -59,6 +58,6 @@ const getByID = async (req, res, next) => {
 };
 
 module.exports = {
+  getAll,
   get,
-  getByID,
 };

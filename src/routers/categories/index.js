@@ -6,7 +6,7 @@ router.get('/plot', categories.plot.allPlots.getAllPlots);
 router.get('/plot/:id', categories.plot.plotById.get);
 
 // locations
-router.get('/location', categories.location.get);
-router.get('/location/:id', categories.location.getByID);
+router.get('/location', categories.location.getAll);
+router.get('/location/:id', categories.location.get);
 
 module.exports = router;
