@@ -12,8 +12,7 @@ const getAllForPlots = async () => {
 };
 
 const getForPlot = async (id) => {
-  console.log(id);
-  const locations = knex('plot_location')
+  const locations = await knex('plot_location')
     .select(
       'locations.id',
       'locations.name',
@@ -23,7 +22,12 @@ const getForPlot = async (id) => {
   return locations;
 };
 
+const get = async () => {
+  return await knex('locations');
+};
+
 module.exports = {
   getAllForPlots,
   getForPlot,
+  get,
 };

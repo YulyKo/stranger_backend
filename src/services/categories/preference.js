@@ -1,11 +1,13 @@
 const { knex } = require('../../db');
 
 const getAllForPlots = async () => {
-  const prefences = await knex('user_likes_plot')
-    .select('*');
-    return prefences;
+  return await knex('user_likes_plot');
+};
+const getAllForLocations = async () => {
+  return await knex('user_likes_location');
 };
 
 module.exports = {
   getAllForPlots,
+  getAllForLocations,
 };

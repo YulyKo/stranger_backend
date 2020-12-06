@@ -1,3 +1,4 @@
-const plots = require('./plots/index');
+const plot = require('./plot/index');
+const location = require('./locaiton');
 
-module.exports = { plots };
+module.exports = { plot, location };

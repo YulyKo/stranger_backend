@@ -1,7 +1,11 @@
 const router = require('express').Router();
 const { categories } = require('../../controller');
 
-router.get('/plot', categories.plots.allPlots.getAllPlots);
-router.get('/plot/:id', categories.plots.plotById.get);
+// plots
+router.get('/plot', categories.plot.allPlots.getAllPlots);
+router.get('/plot/:id', categories.plot.plotById.get);
+
+// locations
+router.get('/location', categories.location.get);
 
 module.exports = router;
