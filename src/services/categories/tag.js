@@ -25,7 +25,25 @@ const getForPlot = async (id) => {
   return tags;
 };
 
+async function getTypeID(type) {
+  return await knex('type_tags').select('id').where({ 'type_name': type });
+}
+
+const getByTypeName = async (typeName) => {
+  const tags = await knex('tags')
+    .whereIn('id_type', getTypeID(typeName));
+  return tags;
+};
+
+const getAllTagsForCategory = async (tagTypeName) => {
+  const tableCategotyName = `${tagTypeName}_tag`;
+  const tags = knex(tableCategotyName)
+  .leftJoin('tags', { 'tags.id': `${tableCategotyName}.id_tag` });
+  return tags;
+};
 module.exports = {
   getTagsForPlots,
   getForPlot,
+  getByTypeName,
+  getAllTagsForCategory,
 };

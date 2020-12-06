@@ -11,5 +11,9 @@ router.get('/location/:id', categories.location.get);
 
 // persons
 router.get('/person', categories.person.getAll);
+router.get('/person/:id', categories.person.get);
+
+// arts
+router.get('/art', categories.art.getAll.get);
 
 module.exports = router;
