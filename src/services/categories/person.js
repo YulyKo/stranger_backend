@@ -26,8 +26,13 @@ const getAll = async () => {
   return knex('persons');
 };
 
+const get = async (id) => {
+  return knex('persons').where({ id });
+};
+
 module.exports = {
   getAllForPlots,
   getForPlot,
   getAll,
+  get,
 };
