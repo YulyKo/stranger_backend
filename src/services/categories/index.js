@@ -4,6 +4,7 @@ const person = require('./person');
 const location = require('./location');
 const preference = require('./preference');
 const art = require('./art');
+const relationship = require('./relationship');
 
 module.exports = {
   plot,
@@ -12,4 +13,5 @@ module.exports = {
   location,
   preference,
   art,
+  relationship,
 };
