@@ -36,14 +36,32 @@ const getByTypeName = async (typeName) => {
 };
 
 const getAllTagsForCategory = async (tagTypeName) => {
-  const tableCategotyName = `${tagTypeName}_tag`;
-  const tags = knex(tableCategotyName)
-  .leftJoin('tags', { 'tags.id': `${tableCategotyName}.id_tag` });
+  const tableCategoryName = `${tagTypeName}_tag`;
+  const tags = knex(tableCategoryName)
+    .leftJoin('tags', { 'tags.id': `${tableCategoryName}.id_tag` });
   return tags;
 };
+
+const getForArt = async (id) => {
+  // `${tableCategoryName}.id_${tagTypeName}`
+  const tags = await knex('art_tag')
+    .leftJoin({ 'tags': 'art_tag.id_tag' })
+    .where({ 'art_tag_tag.id_art': id });
+  return tags;
+};
+
+// const getAllTagsForCategoryByID = async (tagTypeName, id) => {
+//   const tableCategoryName = `${tagTypeName}_tag`;
+//   const tags = await knex(tableCategoryName)
+//     .leftJoin('tags', { 'tags.id': `${tableCategoryName}.id_tag` })
+//     .where({ `${tableCategoryName}.id_${tagTypeName}`: id });
+//   return tags;
+// };
+
 module.exports = {
   getTagsForPlots,
   getForPlot,
   getByTypeName,
+  getForArt,
   getAllTagsForCategory,
 };

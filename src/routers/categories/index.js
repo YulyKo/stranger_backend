@@ -15,5 +15,6 @@ router.get('/person/:id', categories.person.get);
 
 // arts
 router.get('/art', categories.art.getAll.get);
+router.get('/art/:id', categories.art.getByID.get);
 
 module.exports = router;

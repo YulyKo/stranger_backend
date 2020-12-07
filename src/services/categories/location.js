@@ -1,3 +1,4 @@
+const { knex } = require('../../db');
 
 const getAllForPlots = async () => {
   const locations = await knex('plot_location')
