@@ -46,7 +46,7 @@ const getForArt = async (id) => {
   // `${tableCategoryName}.id_${tagTypeName}`
   const tags = await knex('art_tag')
     .leftJoin({ 'tags': 'art_tag.id_tag' })
-    .where({ 'art_tag_tag.id_art': id });
+    .where({ 'art_tag.id_art': id });
   return tags;
 };
 
