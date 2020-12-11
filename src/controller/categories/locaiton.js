@@ -57,7 +57,22 @@ const get = async (req, res, next) => {
   }
 };
 
+const create = async (req, res, next) {
+  try {
+    logger.info('create new location');
+    const id = await location.create(req.body);
+    res.send({
+      message: 'successful created',
+      id
+    });
+  } catch (error) {
+    logger.error(error.message);
+    next(createError(500, error.message));
+  }
+};
+
 module.exports = {
   getAll,
   get,
+  create,
 };

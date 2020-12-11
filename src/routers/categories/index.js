@@ -8,6 +8,7 @@ router.post('/plot', categories.plot.toDB.create);
 
 // locations
 router.get('/location', categories.location.getAll);
+router.get('/location', categories.location.create);
 router.get('/location/:id', categories.location.get);
 
 // persons

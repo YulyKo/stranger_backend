@@ -30,9 +30,14 @@ const getByID = async (id) => {
   return await knex('locations').where({ id });
 };
 
+const create = async (location) => {
+  await knex('locations').insert(location);
+};
+
 module.exports = {
   getAllForPlots,
   getForPlot,
   get,
   getByID,
+  create,
 };
