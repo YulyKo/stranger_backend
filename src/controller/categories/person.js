@@ -55,7 +55,18 @@ const get = async (req, res, next) => {
   }
 };
 
+const create = async (req, res, next) => {
+  try {
+    logger.info('create person');
+    person.create(req.body);
+  } catch (error) {
+    logger.error(error.message);
+    next(500, error.message);
+  }
+};
+
 module.exports = {
   getAll,
   get,
+  create,
 };

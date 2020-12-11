@@ -13,6 +13,7 @@ router.get('/location/:id', categories.location.get);
 
 // persons
 router.get('/person', categories.person.getAll);
+router.post('/person', categories.person.create);
 router.get('/person/:id', categories.person.get);
 
 // arts
@@ -24,5 +25,7 @@ router.get('/art/:id', categories.art.getByID.get);
 router.get('/relationship', categories.relationship.getAll.get);
 router.post('/relationship', categories.relationship.create);
 
+// tag
 router.post('/tag', categories.tag.create);
+
 module.exports = router;

@@ -27,7 +27,11 @@ const getAll = async () => {
 };
 
 const get = async (id) => {
-  return knex('persons').where({ id });
+  return await knex('persons').where({ id });
+};
+
+const create = async (newPerson) => {
+  await knex('relationships').insert(newPerson);
 };
 
 module.exports = {
@@ -35,4 +39,5 @@ module.exports = {
   getForPlot,
   getAll,
   get,
+  create,
 };
