@@ -31,5 +31,6 @@ router.post('/relationship', categories.relationship.create);
 
 // tag
 router.post('/tag', categories.tag.create);
+router.delete('/tag/:id&:id_type', categories.tag.remove);
 
 module.exports = router;

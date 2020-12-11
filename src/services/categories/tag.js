@@ -58,8 +58,8 @@ const getForArt = async (id) => {
 //   return tags;
 // };
 
-const create = async (newTag) => {
-  await knex('tags')
+const create = async (tableName, newTag) => {
+  await knex(tableName)
     .insert(newTag);
 };
 
