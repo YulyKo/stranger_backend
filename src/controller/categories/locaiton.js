@@ -3,6 +3,7 @@ const { categories: { location } } = require('../../services');
 const createError = require('http-errors');
 const preference = require('../../services/categories/preference');
 const { response } = require('express');
+const { default: commonRemovingSmthById } = require('../../utils/commonRemovingSmthById');
 
 let resultJSON = [];
 
@@ -71,8 +72,20 @@ const create = async (req, res, next) => {
   }
 };
 
+const remove = async (req, res, next) => {
+  try {
+    logger.info('delete location');
+    await commonRemovingSmthById.remove('plot_location', 'id_location', req.params.id);
+    await commonRemovingSmthById.remove('locations', 'id', req.params.id);
+  } catch (error) {
+    logger.error(error.message);
+    next(createError(500, error.message));
+  }
+};
+
 module.exports = {
   getAll,
   get,
   create,
+  remove,
 };

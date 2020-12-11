@@ -23,7 +23,10 @@ const create = async (req, res, next) => {
 const remove = async (req, res, next) => {
   try {
     logger.info('delete plot');
-    await commonRemovingSmthById.remove(req.params.id);
+    await commonRemovingSmthById.remove('plot_tag', 'id_plot', req.params.id);
+    await commonRemovingSmthById.remove('plot_location', 'id_plot', req.params.id);
+    await commonRemovingSmthById.remove('plot_person', 'id_plot', req.params.id);
+    await commonRemovingSmthById.remove('plots', 'id', req.params.id);
   } catch (error) {
     logger.error(error.message);
     next(createError(500, error.message));

@@ -10,6 +10,7 @@ router.get('/plot/:id', categories.plot.plotById.get);
 // locations
 router.get('/location', categories.location.getAll);
 router.post('/location', categories.location.create);
+router.delete('/location', categories.location.remove);
 router.get('/location/:id', categories.location.get);
 
 // persons
