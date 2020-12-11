@@ -1,6 +1,7 @@
 const logger = require('../../utils/logger')(__filename);
 const createError = require('http-errors');
 const { categories: { person, preference } } = require('../../services');
+const { default: commonRemovingSmthById } = require('../../utils/commonRemovingSmthById');
 let resultJSON = [];
 
 function comparePreferencesToJSON(preferences) {
@@ -48,7 +49,7 @@ const get = async (req, res, next) => {
   try {
     const id = req.params.id;
     logger.info(`get person by id ${id}`);
-    getPersonWithPerferences(res, id);
+    await getPersonWithPerferences(res, id);
   } catch (error) {
     logger.error(error.message);
     next(500, error.message);
@@ -58,7 +59,22 @@ const get = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     logger.info('create person');
-    person.create(req.body);
+    await person.create(req.body);
+  } catch (error) {
+    logger.error(error.message);
+    next(500, error.message);
+  }
+};
+
+const remove = async (req, res, next) => {
+  try {
+    logger.info('delete person');
+    const id = req.params.id;
+    await commonRemovingSmthById.remove('plot_person', 'id_person', id);
+    await commonRemovingSmthById.remove('relationships', 'id_person', id);
+    await commonRemovingSmthById.remove('relationships', 'id_person2', id);
+    await commonRemovingSmthById.remove('persons', 'id', id);
+
   } catch (error) {
     logger.error(error.message);
     next(500, error.message);
@@ -69,4 +85,5 @@ module.exports = {
   getAll,
   get,
   create,
+  remove,
 };

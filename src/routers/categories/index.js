@@ -17,6 +17,7 @@ router.get('/location/:id', categories.location.get);
 router.get('/person', categories.person.getAll);
 router.post('/person', categories.person.create);
 router.get('/person/:id', categories.person.get);
+router.delete('/person/:id', categories.person.remove);
 
 // arts
 router.get('/art', categories.art.getAll.get);
