@@ -37,7 +37,18 @@ const get = async (id)  => {
     .where({ 'art_tag.id_art': id });
 };
 
+const create = async (newArt) => {
+  await knex('arts').insert(newArt);
+  
+  let tags = [];
+  newArt.tags.forEach(id_tag => {
+    tags.push([newArt.id_art, id_tag]);
+  });
+  await knex('art_tag').insert(tags);
+};
+
 module.exports = {
   getAll,
   get,
+  create,
 };

@@ -60,13 +60,7 @@ const getForArt = async (id) => {
 
 const create = async (newTag) => {
   await knex('tags')
-    .insert({
-      id_type: newTag.id_type,
-      author: newTag.author,
-      name: newTag.name,
-      bg_color: newTag.bg_color,
-      text_color: newTag.text_color,
-    });
+    .insert(newTag);
 };
 
 module.exports = {
