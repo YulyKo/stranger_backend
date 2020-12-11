@@ -4,13 +4,13 @@ const { categories } = require('../../controller');
 // plots
 router.get('/plot', categories.plot.allPlots.getAllPlots);
 router.post('/plot', categories.plot.create);
-router.delete('/plot', categories.plot.remove);
+router.delete('/plot/:id', categories.plot.remove);
 router.get('/plot/:id', categories.plot.plotById.get);
 
 // locations
 router.get('/location', categories.location.getAll);
 router.post('/location', categories.location.create);
-router.delete('/location', categories.location.remove);
+router.delete('/location/:id', categories.location.remove);
 router.get('/location/:id', categories.location.get);
 
 // persons
