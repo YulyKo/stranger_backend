@@ -23,6 +23,7 @@ router.delete('/person/:id', categories.person.remove);
 router.get('/art', categories.art.getAll.get);
 router.post('/art', categories.art.create);
 router.get('/art/:id', categories.art.getByID.get);
+router.delete('/art/:id', categories.art.remove);
 
 // realtionships
 router.get('/relationship', categories.relationship.get);
