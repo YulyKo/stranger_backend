@@ -4,6 +4,7 @@ const { categories } = require('../../controller');
 // plots
 router.get('/plot', categories.plot.allPlots.getAllPlots);
 router.get('/plot/:id', categories.plot.plotById.get);
+router.post('/plot', categories.plot.toDB.create);
 
 // locations
 router.get('/location', categories.location.getAll);
