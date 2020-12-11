@@ -21,6 +21,11 @@ const getAll = async () => {
     .innerJoin('type_relationship', 'type_relationship.id' , 'relationships.id_type_relationship');
 };
 
+const create = async (newRelationship) => {
+  await knex('relatiosnhips').insert(newRelationship);
+};
+
 module.exports = {
   getAll,
+  create,
 };

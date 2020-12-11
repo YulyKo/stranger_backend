@@ -22,6 +22,7 @@ router.get('/art/:id', categories.art.getByID.get);
 
 // realtionships
 router.get('/relationship', categories.relationship.getAll.get);
+router.post('/relationship', categories.relationship.create);
 
 router.post('/tag', categories.tag.create);
 module.exports = router;
