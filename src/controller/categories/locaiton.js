@@ -57,7 +57,7 @@ const get = async (req, res, next) => {
   }
 };
 
-const create = async (req, res, next) {
+const create = async (req, res, next) => {
   try {
     logger.info('create new location');
     const id = await location.create(req.body);
