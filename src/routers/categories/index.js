@@ -3,7 +3,8 @@ const { categories } = require('../../controller');
 
 // plots
 router.get('/plot', categories.plot.allPlots.getAllPlots);
-router.post('/plot', categories.plot.toDB.create);
+router.post('/plot', categories.plot.create);
+router.delete('/plot', categories.plot.remove);
 router.get('/plot/:id', categories.plot.plotById.get);
 
 // locations
@@ -22,7 +23,7 @@ router.post('/art', categories.art.create);
 router.get('/art/:id', categories.art.getByID.get);
 
 // realtionships
-router.get('/relationship', categories.relationship.getAll.get);
+router.get('/relationship', categories.relationship.get);
 router.post('/relationship', categories.relationship.create);
 
 // tag
