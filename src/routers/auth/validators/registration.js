@@ -2,11 +2,11 @@ const ajv = require('ajv')();
 
 const schema = ajv.compile({
   type: 'object',
-  required: ['login', 'firstName', 'lastName', 'password'],
+  required: ['login', 'name', 'dateOfBirdth', 'password'],
   properties: {
-    email: { type: 'string', format: 'login' },
-    firstName: { type: 'string' },
-    lastName: { type: 'string' },
+    login: { type: 'string', format: 'login' },
+    name: { type: 'string' },
+    dateOfBirdth: { type: 'date' },
     password: { type: 'string', minLength: 6 }
   }
 });

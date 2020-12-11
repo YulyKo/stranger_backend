@@ -4,7 +4,7 @@ const schema = ajv.compile({
   type: 'object',
   required: ['login', 'password'],
   properties: {
-    email: { type: 'string', format: 'login' },
+    login: { type: 'string', format: 'login' },
     password: { type: 'string', minLength: 6 }
   }
 });
