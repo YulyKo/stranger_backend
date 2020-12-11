@@ -3,6 +3,7 @@ const location = require('./locaiton');
 const person = require('./person');
 const art = require('./art/index');
 const relationship = require('./relationship');
+const tag = require('./tag');
 
 module.exports = {
   plot,
@@ -10,4 +11,5 @@ module.exports = {
   person,
   art,
   relationship,
+  tag,
 };

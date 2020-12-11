@@ -58,10 +58,22 @@ const getForArt = async (id) => {
 //   return tags;
 // };
 
+const create = async (newTag) => {
+  await knex('tags')
+    .insert({
+      id_type: newTag.id_type,
+      author: newTag.author,
+      name: newTag.name,
+      bg_color: newTag.bg_color,
+      text_color: newTag.text_color,
+    });
+};
+
 module.exports = {
   getTagsForPlots,
   getForPlot,
   getByTypeName,
   getForArt,
   getAllTagsForCategory,
+  create,
 };
